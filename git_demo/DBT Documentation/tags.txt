@@ -1,0 +1,55 @@
+
+
+
+Tags can be defined in the specific models : by configuring it in that model
+
+{{ config(tags=["crime"]) }}
+
+with cptcode as (select * from healthcare.source.cptcode)
+
+select *
+from cptcode
+
+--dbt run -m tag:crime
+	
+
+tags can be used in dbt project.yml to assign tags to the folders containg models:
+
+models:
+  my_new_project:
+    # Applies to all files under models/example/
+    example:
+      materialized: table
+      chicagocrime:
+        tags: 
+          - crime
+      raw_zone:
+        tags:
+          - healthcare
+          - health
+
+dbt run -m tag: crime (all the models will run in chicagocrime folder)
+dbt run -m tag: health/healthcare (all the models will run in raw_zone folder)
+
+
+tags can be used in testing the models:
+
+models:
+  - name: dim_location
+    description: Check whether the values of fact_id is unique or not
+    columns:
+      - name: location_id
+        tags: ['loc_tag']
+        tests:
+          - unique
+          - not_null
+
+--dbt test -m/--model tag:loc_tag
+
+
+If a singular test:
+
+tests/<filename>.sql
+{{ config(tags = ['my_tag']) }}
+
+select ...

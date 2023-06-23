@@ -1,0 +1,52 @@
+STORE FAILURES:
+
+The configured test(s) will store their failures when dbt test --store-failures is invoked.
+
+---------------------------------------------------------------------------------------------------------------------------
+1- Specfic test:
+version: 2
+
+models:
+  - name: my_model
+    columns:
+      - name: my_column
+        tests:
+          - unique:
+              config:
+                store_failures: true  # always store failures
+          - not_null:
+              config:
+                store_failures: false  # never store failures
+
+---------------------------------------------------------------------------------------------------------------------------
+
+2- Configure a singular (data) test:
+
+tests/<filename>.sql
+{{ config(store_failures = true) }}
+
+select ...
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Set the default for all instances of a generic (schema) test, by setting the config inside its test block (definition):
+
+3- macros/<filename>.sql
+{% test <testname>(model, column_name) %}
+
+{{ config(store_failures = false) }}
+
+select ...
+
+{% endtest %}
+
+---------------------------------------------------------------------------------------------------------------------------
+
+4- Set the default for all tests in a package or project:
+
+dbt_project.yml
+tests:
+  +store_failures: true  # all tests
+  
+  <package_name>:
+    +store_failures: false # tests in <package_name>

@@ -1,0 +1,9 @@
+https://github.com/dbt-labs/corp/blob/main/dbt_style_guide.md
+https://docs.getdbt.com/guides/advanced/using-jinja - jinja
+https://docs.getdbt.com/reference/node-selection/set-operators#intersections - union, intersection
+https://docs.getdbt.com/docs/build/pythown-models - python models
+
+
+
+querry comments
+docs block
