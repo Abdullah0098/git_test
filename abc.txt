@@ -1,2 +1,7 @@
 Hi there Git> 
 How are you doing!!
+
+answer:
+
+Hi Abdullah
+I am doing great!
